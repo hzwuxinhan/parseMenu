@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "shark-utils": "^1.0.21",
+    "yargs": "^6.6.0"
+  }
+}
