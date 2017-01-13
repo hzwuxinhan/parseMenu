@@ -2,6 +2,7 @@
 
 var argv = require('yargs').argv,
     http = require('http'),
+    schedule = require('node-schedule'),
     fs = require('fs');
 
 var utils = require('shark-utils');
@@ -75,7 +76,13 @@ function httpRequest(options) {
     req.end();
 }
 
+var rule = new schedule.RecurrenceRule();
+rule.dayOfWeek = [1,2,3,4,5];
+rule.hour = [11,17];
+rule.minute = 35;
 
-parseMenus()
+var j = schedule.scheduleJob(rule, function(){
+  parseMenus()
+});
 
 

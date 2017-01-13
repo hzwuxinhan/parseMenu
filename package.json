@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "node-schedule": "^1.2.0",
     "shark-utils": "^1.0.21",
     "yargs": "^6.6.0"
   }
