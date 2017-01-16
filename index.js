@@ -8,12 +8,7 @@ var argv = require('yargs').argv,
 var utils = require('shark-utils');
 
 var target = argv.target;
-var time = new Date().getHours();
-if(time>12) {
-    var type = "afternoon"
-}else{
-    var type = "forenoon"
-}
+var type,time;
 
 if(target == "online") {
     var users = ['hzwuxinhan','hzwuhaowei','hzzhouming','hzgaozepan','hzwangying1','hzliangyuekang','hzzhoulong','wuzifang','hzgaomiaomiao','hzdingxinghua','hzjinbing','hzyangbo15','hzlingqiao','hzyuhuibin','hzzhanghao2015'];
@@ -22,6 +17,12 @@ if(target == "online") {
 }
 
 function parseMenus(){
+    time = new Date().getHours();
+    if(time>12) {
+        type = "afternoon"
+    }else{
+        type = "forenoon"
+    }
     var options = {
         hostname: 'crystalpot.cn',
         port: 80,
