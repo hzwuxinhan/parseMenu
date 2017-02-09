@@ -8,7 +8,7 @@ var argv = require('yargs').argv,
 var utils = require('shark-utils');
 
 var target = argv.target;
-var type,time;
+var type;
 
 if(target == "online") {
     var users = ['hzwuxinhan','hzwuhaowei','hzzhouming','hzgaozepan','hzwangying1','hzliangyuekang','hzzhoulong','wuzifang','hzgaomiaomiao','hzdingxinghua','hzjinbing','hzyangbo15','hzlingqiao','hzyuhuibin','hzzhanghao2015'];
@@ -16,13 +16,8 @@ if(target == "online") {
     var users = ['hzwuxinhan']
 }
 
-function parseMenus(){
-    time = new Date().getHours();
-    if(time>12) {
-        type = "afternoon"
-    }else{
-        type = "forenoon"
-    }
+function parseMenus(typeNum){
+    type = typeNum;
     var options = {
         hostname: 'crystalpot.cn',
         port: 80,
@@ -35,8 +30,7 @@ function parseMenus(){
 function parseHtml(html) {
 
     html = html.replace(/<[^>]+>/g,"");
-    
-    if(type == "afternoon") {
+    if(type == 2) {
         html = html.replace(/(.|\n|\r)*餐厅晚餐/g,'');
         html = html.replace(/网易餐厅夜宵(.|\n|\r)*/,"");
         var name = "晚餐";
@@ -77,13 +71,21 @@ function httpRequest(options) {
     req.end();
 }
 
-var rule = new schedule.RecurrenceRule();
-rule.dayOfWeek = [1,2,3,4,5];
-rule.hour = [11,17];
-rule.minute = 35;
+var ruleOne = new schedule.RecurrenceRule();
+ruleOne.dayOfWeek = [1,2,3,4,5];
+ruleOne.hour = 11;
+ruleOne.minute = 30;
 
-var j = schedule.scheduleJob(rule, function(){
-  parseMenus()
+var ruleTwo = new schedule.RecurrenceRule();
+ruleTwo.dayOfWeek = [1,2,3,4,5];
+ruleTwo.hour = 17;
+ruleTwo.minute = 30;
+
+var j = schedule.scheduleJob(ruleOne, function(){
+  parseMenus(1)
 });
 
+var i = schedule.scheduleJob(ruleTwo, function(){
+  parseMenus(2)
+});
 
